@@ -1,2 +1,2 @@
-# SportsStore
-E-Commerce application | Sports Store
+# E-Commerce application | Sports Store
+
