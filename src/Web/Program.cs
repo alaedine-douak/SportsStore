@@ -15,6 +15,10 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 
+app.MapControllerRoute("pagination",
+    "Products/{productPage}",
+    new { Controller = "Home", action = "Index" });
+
 app.MapDefaultControllerRoute();
 
 app.EnsurePopulatedData();

@@ -8,9 +8,9 @@ using SportsStore.Web.ViewModels;
 namespace SportsStore.Web.Infrastructure;
 
 [HtmlTargetElement("div", Attributes = "page-model")]
-public class PageLinkTagHelper(IUrlHelperFactory helperFactory) : TagHelper
+public class PageLinkTagHelper(IUrlHelperFactory urlHelperFactory) : TagHelper
 {
-    private readonly IUrlHelperFactory _helperFactory = helperFactory;
+    private readonly IUrlHelperFactory _urlHelperFactory = urlHelperFactory;
 
     [ViewContext]
     [HtmlAttributeNotBound]
@@ -18,16 +18,29 @@ public class PageLinkTagHelper(IUrlHelperFactory helperFactory) : TagHelper
     public PagingInfo? PageModel { get; set; }
     public string? PageAction { get; set; }
 
+    public bool PageClassesEnabled { get; set; } = false;
+    public string PageClass { get; set; } = string.Empty;
+    public string PageClassNormal { get; set; } = string.Empty;
+    public string PageClassSelected { get; set; } = string.Empty;
+
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        if (ViewContext != null && PageModel != null) 
+        if (ViewContext != null && PageModel != null)
         {
-            IUrlHelper urlHelper = _helperFactory.GetUrlHelper(ViewContext);
+            IUrlHelper urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new("div");
+
             for (int i = 1; i <= PageModel.TotalPages; i++)
             {
                 TagBuilder tag = new("a");
                 tag.Attributes["href"] = urlHelper.Action(PageAction, new { productPage = i });
+                
+                if (PageClassesEnabled)
+                {
+                    tag.AddCssClass(PageClass);
+                    tag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
+                }
+                
                 tag.InnerHtml.Append(i.ToString());
                 result.InnerHtml.AppendHtml(tag);
             }
@@ -35,5 +48,4 @@ public class PageLinkTagHelper(IUrlHelperFactory helperFactory) : TagHelper
             output.Content.AppendHtml(result.InnerHtml);
         }
     }
-
 }

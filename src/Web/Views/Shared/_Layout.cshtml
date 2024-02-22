@@ -5,10 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sports Store</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
-    <div>
-        @RenderBody()
+    <header class="bg-dark p-2">
+        <span class="navbar-brand text-white ms-2 fs-bold">SPORT STORE</span>
+    </header>
+    <div class="row m-1 p-1">
+        <div id="categories" class="col-3">
+            Put something useful here later.
+        </div>
+        <div class="col-9">
+            @RenderBody()
+        </div>
     </div>
 </body>
 </html>
