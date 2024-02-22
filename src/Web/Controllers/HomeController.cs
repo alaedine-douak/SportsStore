@@ -19,7 +19,9 @@ public class HomeController(IStoreService storeService) : Controller
            {
             CurrentPage = productPage,
             ItemsPerPage = PageSize,
-            TotalItems = _storeService.Produts.Count()
+            TotalItems = category == null 
+                ? _storeService.Produts.Count()
+                : _storeService.Produts.Where(x => x.Category == category).Count()
            },
            Products = _storeService.Produts
             .Where(x => category == null || x.Category == category)
