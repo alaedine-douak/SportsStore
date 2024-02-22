@@ -11,7 +11,7 @@ public class HomeController(IStoreService storeService) : Controller
     public int PageSize = 4;
 
     [HttpGet]
-    public IActionResult Index(int productPage = 1)
+    public IActionResult Index(string? category, int productPage = 1)
     {
         ProductsListViewModel productsVM = new() 
         {
@@ -22,9 +22,11 @@ public class HomeController(IStoreService storeService) : Controller
             TotalItems = _storeService.Produts.Count()
            },
            Products = _storeService.Produts
+            .Where(x => category == null || x.Category == category)
             .OrderBy(x => x.ProductId)
             .Skip((productPage - 1) * PageSize)
-            .Take(PageSize) 
+            .Take(PageSize),
+           CurrentCategory = category
         };
 
         return View(productsVM);

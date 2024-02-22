@@ -5,12 +5,6 @@
    <partial name="_ProductSummary" model="p" />
 }
 
-<div 
-    page-model="@Model?.PageInfo" 
-    page-action="Index"
-    page-classes-enabled="true"
-    page-class="btn"
-    page-class-normal="btn-outline-dark"
-    page-class-selected="btn-primary"
-    class="btn-group pull-right m-1">
+<div page-model="@Model?.PageInfo" page-action="Index" page-classes-enabled="true" page-url-category="@Model?.CurrentCategory!"
+    page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary" class="btn-group pull-right m-1">
 </div>
